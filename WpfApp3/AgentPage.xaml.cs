@@ -31,7 +31,6 @@ namespace WpfApp3
             InitializeComponent();
             var currentService = YamgurovaGlazkiSaveEntities.GetContext().Agent.ToList();
             AgentListView.ItemsSource = currentService;
-
             ComboType.SelectedIndex = 0;
             ComboAgentType.SelectedIndex = 0;
             UpdateAgents();
@@ -195,7 +194,7 @@ namespace WpfApp3
             }
             if (ComboType.SelectedIndex == 5)
             {
-                currentAgents = currentAgents.OrderBy(p => p. Discount).ToList();
+                currentAgents = currentAgents.OrderBy(p => p.Discount).ToList();
             }
             if (ComboType.SelectedIndex == 6)
             {
@@ -210,7 +209,7 @@ namespace WpfApp3
             ChangePage(0, 0);
 
         }
-       
+
         private void TBox_Search_TextChanged(object sender, TextChangedEventArgs e)
         {
             UpdateAgents();
@@ -249,7 +248,7 @@ namespace WpfApp3
         {
             ChangePage(0, Convert.ToInt32(PageListBox.SelectedItem.ToString()) - 1);
         }
-   
+
 
         private void Page_IsVisibleChanged_1(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -265,25 +264,45 @@ namespace WpfApp3
         {
             Manager.MainFrame.Navigate(new AddEditPage(null));
         }
-       
-        public SolidColorBrush FonStyle
+
+
+
+
+        private void ChangePriority_Click_1(object sender, RoutedEventArgs e)
         {
-            get
+            int max = 0;
+            foreach (Agent agent in AgentListView.SelectedItems)
             {
-                if (Discount > 24)
-                {
-                    return (SolidColorBrush)new BrushConverter().ConvertFromString("LightGreen");
+                if (max < agent.Priority)
+                    max = agent.Priority;
 
-                }
-                else
-                {
-                    return (SolidColorBrush)new BrushConverter().ConvertFromString("White");
-
-                }
             }
+            PrioritetPage Window = new PrioritetPage(max);
+            Window.ShowDialog();
+            if (string.IsNullOrEmpty(Window.PriorityBox.Text))
+            {
+                return;
+            }
+            foreach (Agent AgentLV in AgentListView.SelectedItems)
+            {
+                AgentLV.Priority = Convert.ToInt32(Window.PriorityBox.Text);
+            }
+            try
+            {
+                YamgurovaGlazkiSaveEntities.GetContext().SaveChanges();
+                MessageBox.Show("Информация обновлена");
 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+
+            }
+            UpdateAgents();
         }
+        
     }
+
 }
-    }
-    }
+    
+

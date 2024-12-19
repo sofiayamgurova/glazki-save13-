@@ -142,5 +142,11 @@ namespace WpfApp3
 
             }
         }
+
+        private void Real_prod_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new Real2((sender as Button).DataContext as Agent));
+
+        }
     }
 }

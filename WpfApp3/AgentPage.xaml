@@ -48,8 +48,11 @@
                     <TextBlock>ПАО</TextBlock>
 
                 </ComboBox>
+               
+
             </StackPanel>
             <Button Content="Добавить" Name="AddButton" Click="AddButton_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Button>
+            <Button Content="Изменить приоритет" Name="ChangePriority" Click="ChangePriority_Click_1" HorizontalAlignment="Right"  VerticalAlignment="Bottom"></Button>
         </WrapPanel>
         <ListView Name="AgentListView" Grid.Column="0" Grid.Row="2">
             <ListView.ItemTemplate>
@@ -94,6 +97,8 @@
                         <TextBlock Text="{Binding Prod, StringFormat='Продажи за год: {0}'}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" FontSize="16" ></TextBlock>
                         <StackPanel Grid.Column="2" Grid.Row="4" Orientation="Horizontal">
                             <Button Name="EditButton" Content="редактировать" Margin="2" Click="EditButton_Click"></Button>
+                       
+                            
                         </StackPanel>
 
                     </Grid>
